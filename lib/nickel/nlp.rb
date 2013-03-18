@@ -15,7 +15,7 @@ module Nickel
     class << self; attr_accessor :use_date_correction; end
 
     def initialize(query, date_time = Nickel.time_class.now)
-      raise InvalidDateTimeError unless [DateTime, Time].any? { |type| date_time.is_a? type }
+      raise InvalidDateTimeError unless [DateTime, Time, ActiveSupport::TimeZone].any? { |type| date_time.is_a? type }
       str_time = date_time.strftime("%Y%m%dT%H%M%S")
       validate_input query, str_time
       @query = query.dup
