@@ -11,7 +11,7 @@ module Nickel
     # @time is always stored on 24 hour clock, but we could initialize a Time object with ZTime.new("1020", :pm)
     # we will convert this to 24 hour clock and set @firm = true
     def initialize(hhmmss = nil, am_pm = nil)
-      t = hhmmss ? hhmmss : ::Time.new.strftime("%H%M%S")
+      t = hhmmss ? hhmmss : Nickel.time_class.now.strftime("%H%M%S")
       t.gsub!(/:/,'') # remove any hyphens, so a user can initialize with something like "2008-10-23"
       self.time = t
       if am_pm then adjust_for(am_pm) end

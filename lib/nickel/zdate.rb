@@ -27,7 +27,7 @@ module Nickel
 
     # Don't use attr_accessor for date, year, month, day; we want to validate on change.
     def initialize(yyyymmdd = nil)
-      d = yyyymmdd ? yyyymmdd.dup : ::Time.new.strftime("%Y%m%d")
+      d = yyyymmdd ? yyyymmdd.dup : Nickel.time_class.now.strftime("%Y%m%d")
       d.gsub!(/-/,'') # remove any hyphens, so a user can initialize with something like "2008-10-23"
       self.date = d
     end
@@ -347,7 +347,7 @@ module Nickel
     def dayname
       # well this is going to be a hack, I need an algo for finding the day
       # Ruby's Time.local is the fastest way to create a Ruby Time object
-      t = ::Time.local(self.year, ZDate.months_of_year[self.month - 1], self.day)
+      t = Nickel.time_class.local(self.year, ZDate.months_of_year[self.month - 1], self.day)
       t.strftime("%a").downcase
     end
     

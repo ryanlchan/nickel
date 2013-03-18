@@ -27,11 +27,23 @@ require File.join(path, 'occurrence')
 require File.join(path, 'nlp.rb')
 
 module Nickel
+
+
   class << self
-    def parse(query, date_time = Time.now)
+    ##
+    # The Time class that Nickel uses internally
+    # Based on Chronic's time_class implementation
+    #
+    # Usage:
+    #     Nickel.time_class = Time.zone
+    #
+    attr_accessor :time_class
+
+    def parse(query, date_time = Nickel.time_class.now)
       n = NLP.new(query, date_time)
       n.parse
       n
     end
   end 
+  self.time_class = Time
 end
